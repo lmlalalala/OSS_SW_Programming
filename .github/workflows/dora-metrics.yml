@@ -28,3 +28,10 @@ jobs:
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         run: python scripts/calculate_dora.py
+
+#수집결과를 JSON 아티팩트로 저장 
+      - name: Upload DORA metrics artifact
+        uses: actions/upload-artifact@v4
+        with:
+          name: dora-metrics
+          path: dora-metrics.json
