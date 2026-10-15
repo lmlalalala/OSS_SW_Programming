@@ -35,3 +35,48 @@ jobs:
         with:
           name: dora-metrics
           path: dora-metrics.json
+
+#주간리포트 자동화
+name: DORA Metrics
+on:
+  push:
+    branches:
+      - main
+
+  workflow_dispatch:
+
+  schedule:
+    - cron: '0 0 * * 1' #매주 월요일 UTC 00:00에 실행됨 (한국기준 월요일 오전 9시)
+
+permissions:
+  contents: read  #리포트를 저장소에 자동커밋하진않고 아티팩트로만 저장
+  actions: read
+
+jobs:
+  collect-dora:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+
+      - name: Run DORA metrics script
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        run: python scripts/calculate_dora.py
+
+      - name: Generate weekly report
+        run: python scripts/generate_weekly_report.py
+
+      - name: Upload DORA metrics artifact
+        uses: actions/upload-artifact@v4
+        with:
+          name: dora-metrics
+          path: |
+            dora-metrics.json
+            reports/weekly-report.md
