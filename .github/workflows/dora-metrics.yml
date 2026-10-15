@@ -1,11 +1,18 @@
-#main 브랜치에 push가 발생하면
-#이 GitHub Actions를 실행합니다.
+name: DORA Metrics
+
+# main 브랜치에 push가 발생하면 GitHub Actions 실행
 on:
   push:
     branches:
       - main
-#사람이 직접 실행버튼 누를수 있게 해주는 옵션
+
+  # 사람이 직접 실행 버튼을 누를 수 있게 해주는 옵션
   workflow_dispatch:
+
+  # 매주 월요일 UTC 00:00 실행
+  # 한국 기준 월요일 오전 9시
+  schedule:
+    - cron: '0 0 * * 1'
 
 permissions:
   contents: read
@@ -24,55 +31,17 @@ jobs:
         with:
           python-version: '3.12'
 
+      # DORA 메트릭 수집
       - name: Run DORA metrics script
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         run: python scripts/calculate_dora.py
 
-#수집결과를 JSON 아티팩트로 저장 
-      - name: Upload DORA metrics artifact
-        uses: actions/upload-artifact@v4
-        with:
-          name: dora-metrics
-          path: dora-metrics.json
-
-#주간리포트 자동화
-name: DORA Metrics
-on:
-  push:
-    branches:
-      - main
-
-  workflow_dispatch:
-
-  schedule:
-    - cron: '0 0 * * 1' #매주 월요일 UTC 00:00에 실행됨 (한국기준 월요일 오전 9시)
-
-permissions:
-  contents: read  #리포트를 저장소에 자동커밋하진않고 아티팩트로만 저장
-  actions: read
-
-jobs:
-  collect-dora:
-    runs-on: ubuntu-latest
-
-    steps:
-      - name: Checkout repository
-        uses: actions/checkout@v4
-
-      - name: Set up Python
-        uses: actions/setup-python@v5
-        with:
-          python-version: '3.12'
-
-      - name: Run DORA metrics script
-        env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-        run: python scripts/calculate_dora.py
-
+      # 주간 리포트 자동 생성
       - name: Generate weekly report
         run: python scripts/generate_weekly_report.py
 
+      # 수집 결과와 주간 리포트를 Artifact로 저장
       - name: Upload DORA metrics artifact
         uses: actions/upload-artifact@v4
         with:
