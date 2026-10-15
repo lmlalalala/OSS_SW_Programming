@@ -1,0 +1,30 @@
+#main 브랜치에 push가 발생하면
+#이 GitHub Actions를 실행합니다.
+on:
+  push:
+    branches:
+      - main
+#사람이 직접 실행버튼 누를수 있게 해주는 옵션
+  workflow_dispatch:
+
+permissions:
+  contents: read
+  actions: read
+
+jobs:
+  collect-dora:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+
+      - name: Run DORA metrics script
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        run: python scripts/calculate_dora.py

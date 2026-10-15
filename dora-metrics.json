@@ -1,0 +1,7 @@
+{
+    "generated_at": "2026-10-15T11:40:12.358824",
+    "lead_time_minutes": 45,
+    "deployment_frequency": 10,
+    "mttr_minutes": 30,
+    "change_failure_rate": 20.0
+}
