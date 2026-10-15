@@ -266,3 +266,35 @@ DORA 4대 지표 수집 과정을 자동화했습니다.
 
 이를 통해 GitHub 저장소의 개발 및 배포 활동을 기반으로
 DevOps 성과를 자동으로 확인할 수 있는 구조를 구성했습니다.
+
+## 11. 구현 결과
+
+GitHub Actions를 활용하여
+DORA 4대 지표 수집 과정을 자동화했습니다.
+
+구현한 기능은 다음과 같습니다.
+
+- GitHub Push 기반 자동 실행
+- 수동 Workflow 실행
+- 주간 Schedule 자동 실행
+- DORA 4대 지표 자동 계산
+- JSON 결과 생성
+- GitHub Actions Artifact 저장
+- 주간 리포트 자동 생성
+- Chart.js 기반 대시보드 시각화
+
+### 선택과제 구현
+
+선택과제로 DORA 메트릭 수집 결과를 JSON Artifact로 저장하고,
+주간 보고서를 자동 생성하도록 구성했습니다.
+
+- `dora-metrics.json` 자동 생성
+- `reports/weekly-report.md` 자동 생성
+- JSON 및 주간 보고서를 GitHub Actions Artifact로 저장
+- 매주 월요일 오전 9시(KST)에 자동 실행되도록 Schedule 설정
+
+생성된 결과물은 GitHub Actions 실행 상세 페이지의
+`Artifacts` 영역에서 확인 및 다운로드할 수 있습니다.
+
+이를 통해 GitHub 저장소의 개발 및 배포 활동을 기반으로
+DevOps 성과를 자동으로 확인할 수 있는 구조를 구성했습니다.
