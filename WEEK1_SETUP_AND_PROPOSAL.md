@@ -123,7 +123,10 @@ Repository 이름:
 
 ---
 
-## 6. Repository URL
+## 6. 선택 과제 수행
+- GitHub Profile: https://github.com/lmlalalala
+
+## 7. Repository URL
 
 GitHub Repository:
 
