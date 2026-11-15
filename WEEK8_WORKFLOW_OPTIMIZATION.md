@@ -77,7 +77,17 @@ PR은 main과의 전체 차이를 검사하므로, 코드 변경이 포함된 PR
 - [선택적 배포 PR 실행](https://github.com/lmlalalala/OSS_SW_Programming/actions/runs/43725553386)
 - [검토용 초안 PR #27](https://github.com/lmlalalala/OSS_SW_Programming/pull/27)
 
-선택적 배포의 최종 실행 상태와 문서만 변경한 Push의 검증 결과는 실행 종료 후 아래에 기록한다.
+실제 확인 결과:
+
+| 실행 | 결과 |
+|---|---|
+| 관련 파일 Push `43725542489` | changes·Build·테스트 9개·데모 ZIP 생성 모두 성공 |
+| PR `43725553386` | changes·Build·테스트 9개 성공, Deploy는 skipped |
+| 문서만 Push `43725742830` | changes 성공, Build·Test·Deploy 모두 skipped |
+
+[문서만 변경한 Push 결과](https://github.com/lmlalalala/OSS_SW_Programming/actions/runs/43725742830)에서 생략된 작업을 확인할 수 있다.
+`skipped`는 조건에 따라 실행하지 않았다는 뜻이며 실패가 아니다.
+이후 보고서의 검증 결과를 보완한 커밋은 워크플로우 코드 변경을 포함하지 않는다.
 
 ## 6. 제출 파일
 
