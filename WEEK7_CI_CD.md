@@ -63,21 +63,40 @@ OK
 테스트에서는 지표 계산값, 최근 7일 필터, 진행 중인 실행 제외, 빈 기록,
 환경변수 누락, API 요청의 인증 헤더, 보고서 생성, ZIP 파일 구성과 불필요한 파일 제외를 확인하였다.
 YAML은 PyYAML로 읽고 Build → Test → Deploy 의존성도 확인하였다.
-로컬 결과만으로 GitHub의 Matrix와 실제 토큰 주입까지 성공했다고 판단하지는 않았다.
+로컬 검증 이후 GitHub에서도 Matrix와 실제 토큰을 사용하는 수집 단계를 실행하여 확인하였다.
 
 진행 중 기본 권한의 원격 clone이 네트워크 오류로 실패했고, 로컬 clone도 Git 실행 오류로 실패하였다.
 이후 허용된 별도 원격 clone으로 작업 폴더를 준비하였다. Lint와 테스트 실행에서는 실패가 없었다.
-GitHub 전송은 자동 승인 검토에서 사용자 승인 필요로 차단되어 아직 수행하지 않았다.
+GitHub 전송은 처음에 사용자 승인 필요로 중단되었고, 승인 후 7주차 브랜치만 전송하였다.
 
 ## 5. GitHub 검증 상태와 제출 링크
 
-현재 상태: **로컬 구현·검증 완료, 원격 브랜치 전송 승인 대기.**
-GitHub Actions 실행 링크와 실제 성공 여부는 전송 후 확인하여 보완해야 한다.
-아직 실제 API 수집, 6개 Matrix 실행, 최종 데모 ZIP 생성이 GitHub에서 성공했다는 기록은 없다.
+2026년 11월 15일(KST), 브랜치 Push로 시작한 실행 `43721651623`의 최종 상태가
+`completed / success`인 것을 확인하였다. 검증 대상 커밋은
+`f536c7dfcea4249d02d346be0df2aa51a32a49f3`이다.
 
-- 저장소: https://github.com/lmlalalala/OSS_SW_Programming
-- 워크플로우: 이 보고서의 상대 경로 링크로 로컬 파일 확인 가능
-- Actions 실행 내역: 아직 실행하지 않아 특정 실행 URL 없음
+| 확인 항목 | 실제 결과 |
+|---|---|
+| Build | Lint, 소스 ZIP 생성 및 업로드 성공 |
+| Ubuntu / Python 3.11, 3.12 | 두 조합 모두 테스트 성공 |
+| Windows / Python 3.11, 3.12 | 두 조합 모두 테스트 성공 |
+| macOS / Python 3.11, 3.12 | 두 조합 모두 테스트 성공 |
+| Deploy (demo ZIP only) | 토큰을 이용한 API 수집, 보고서 생성, 데모 ZIP 업로드 성공 |
+| Artifact | `week7-source`, `week7-demo-package` 두 개 생성 확인 |
+
+총 8개 작업(Build 1개, Test 6개, Deploy 1개)이 모두 성공하였다.
+이 실행에서 실패한 작업은 없었다. Artifact 목록과 만료되지 않은 상태도 확인하였다.
+보관 기간은 7일이므로 제출 시점에 따라 다운로드가 만료될 수 있다.
+이번 확인은 실행 상태와 단계 결과, Artifact 목록을 기준으로 하였으며,
+다운로드한 데모 대시보드를 브라우저로 여는 확인은 수행하지 않았다.
+
+- [저장소](https://github.com/lmlalalala/OSS_SW_Programming)
+- [워크플로우 YAML](https://github.com/lmlalalala/OSS_SW_Programming/blob/feature/week7-ci-cd/.github/workflows/week7-ci-cd.yml)
+- [Actions 성공 실행 내역](https://github.com/lmlalalala/OSS_SW_Programming/actions/runs/43721651623)
+- [제출용 보고서](https://github.com/lmlalalala/OSS_SW_Programming/blob/feature/week7-ci-cd/WEEK7_CI_CD.md)
+
+보고서만 갱신한 후속 커밋에는 코드 변경이 없으며, 경로 필터에 따라 Actions를 다시 실행하지 않는다.
+main 병합과 실서버 배포는 수행하지 않았다.
 
 ## 6. 배운 점과 한계
 
