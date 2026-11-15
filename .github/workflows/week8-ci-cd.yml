@@ -34,6 +34,7 @@ jobs:
         with:
           python-version: '3.12'
           install-lint: 'true'
+          cache-enabled: 'true'
       - name: Lint existing scripts and week7 code
         run: python -m ruff check --config week7/ruff.toml scripts week7
       - name: Build source archive

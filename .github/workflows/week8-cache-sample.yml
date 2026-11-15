@@ -1,0 +1,40 @@
+name: Week8 Cache Sample
+on:
+  workflow_call:
+    inputs:
+      cache-enabled:
+        required: true
+        type: boolean
+      label:
+        required: true
+        type: string
+permissions:
+  contents: read
+jobs:
+  measure:
+    name: ${{ inputs.label }}
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    steps:
+      - uses: actions/checkout@v7.0.1
+        with:
+          persist-credentials: false
+      - name: Prepare Python and install lint tool
+        id: prepare
+        uses: ./.github/actions/setup-week8-python
+        with:
+          python-version: '3.12'
+          install-lint: 'true'
+          cache-enabled: ${{ inputs.cache-enabled }}
+          cache-scope: benchmark-${{ github.run_id }}-${{ github.run_attempt }}
+      - name: Lint and test the same source
+        run: |
+          python -m ruff check --config week7/ruff.toml scripts week7
+          python -m unittest discover -s week7/tests -v
+      - name: Record cache state
+        env:
+          LABEL: ${{ inputs.label }}
+          CACHE_ENABLED: ${{ inputs.cache-enabled }}
+          CACHE_HIT: ${{ steps.prepare.outputs.cache-hit }}
+        run: |
+          echo "Sample: $LABEL; cache enabled: $CACHE_ENABLED; exact cache hit: ${CACHE_HIT:-false}" >> "$GITHUB_STEP_SUMMARY"
