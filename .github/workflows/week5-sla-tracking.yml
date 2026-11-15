@@ -1,0 +1,146 @@
+
+name: Week5 Discussion SLA Tracking
+
+on:
+  workflow_dispatch:
+  schedule:
+    - cron: '23 0 * * *'
+
+permissions:
+  contents: read
+  discussions: read
+
+jobs:
+  track-sla:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Check Q&A response time
+        uses: actions/github-script@v9
+        with:
+          script: |
+            const SLA_HOURS = 24;
+            const now = Date.now();
+            const { owner, repo } = context.repo;
+
+            const result = await github.graphql(`
+              query($owner: String!, $repo: String!) {
+                repository(owner: $owner, name: $repo) {
+                  discussions(
+                    first: 100
+                    orderBy: {
+                      field: CREATED_AT
+                      direction: DESC
+                    }
+                  ) {
+                    nodes {
+                      number
+                      title
+                      url
+                      createdAt
+                      category { name }
+                      author { login }
+                      comments(first: 100) {
+                        nodes {
+                          createdAt
+                          author { login }
+                        }
+                      }
+                    }
+                  }
+                }
+              }
+            `, { owner, repo });
+
+            const discussions =
+              result.repository.discussions.nodes;
+
+            const reports = discussions
+              .filter(d => d.category.name === 'Q&A')
+              .filter(d =>
+                now - Date.parse(d.createdAt)
+                <= 30 * 24 * 60 * 60 * 1000
+              )
+              .map(d => {
+                const firstReply = d.comments.nodes.find(c => {
+                  const login = c.author?.login;
+                  return login &&
+                    !login.endsWith('[bot]') &&
+                    login !== d.author?.login;
+                });
+
+                const elapsedHours = firstReply
+                  ? (Date.parse(firstReply.createdAt) -
+                     Date.parse(d.createdAt)) / 3600000
+                  : (now - Date.parse(d.createdAt)) / 3600000;
+
+                const status = firstReply
+                  ? (elapsedHours <= SLA_HOURS
+                      ? 'ON_TIME' : 'LATE')
+                  : (elapsedHours > SLA_HOURS
+                      ? 'OVERDUE' : 'WAITING');
+
+                return {
+                  number: d.number,
+                  title: d.title,
+                  url: d.url,
+                  hours: Number(elapsedHours.toFixed(1)),
+                  status
+                };
+              });
+
+            const table = [
+              [
+                'Discussion',
+                'Elapsed Hours',
+                'SLA Status'
+              ],
+              ...reports.map(r => [
+                `#${r.number} ${r.title}`,
+                String(r.hours),
+                r.status
+              ])
+            ];
+
+            core.summary.addHeading('Discussion SLA Report');
+            core.summary.addRaw(
+              `SLA target: ${SLA_HOURS} hours\n\n`
+            );
+
+            if (reports.length > 0) {
+              core.summary.addTable(table);
+            } else {
+              core.summary.addRaw(
+                'No recent Q&A discussions found.\n'
+              );
+            }
+
+            await core.summary.write();
+
+            const fs = require('fs');
+
+            fs.writeFileSync(
+              'week5-sla-report.json',
+              JSON.stringify(reports, null, 2)
+            );
+
+            const overdue = reports.filter(r =>
+              r.status === 'LATE' ||
+              r.status === 'OVERDUE'
+            );
+
+            core.info(
+              `Checked ${reports.length} discussions`
+            );
+
+            if (overdue.length > 0) {
+              core.warning(
+                `${overdue.length} SLA violations detected`
+              );
+            }
+
+      - name: Upload SLA report
+        uses: actions/upload-artifact@v4
+        with:
+          name: week5-sla-report
+          path: week5-sla-report.json
