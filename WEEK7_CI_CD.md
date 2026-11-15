@@ -71,9 +71,9 @@ GitHub 전송은 처음에 사용자 승인 필요로 중단되었고, 승인 �
 
 ## 5. GitHub 검증 상태와 제출 링크
 
-2026년 11월 15일(KST), 브랜치 Push로 시작한 실행 `43721651623`의 최종 상태가
+2026년 11월 15일(KST), 브랜치 Push로 시작한 실행 `43722632678`의 최종 상태가
 `completed / success`인 것을 확인하였다. 검증 대상 커밋은
-`f536c7dfcea4249d02d346be0df2aa51a32a49f3`이다.
+`b4610106bf0764b0e4f673022aee2282b14b623b`이다.
 
 | 확인 항목 | 실제 결과 |
 |---|---|
@@ -85,6 +85,12 @@ GitHub 전송은 처음에 사용자 승인 필요로 중단되었고, 승인 �
 | Artifact | `week7-source`, `week7-demo-package` 두 개 생성 확인 |
 
 총 8개 작업(Build 1개, Test 6개, Deploy 1개)이 모두 성공하였다.
+첫 실행은 성공했지만 Node.js 20 기반 Actions에 대한 경고가 표시되었다.
+이를 해결하기 위해 checkout은 v7.0.1, setup-python은 v7.1.0,
+upload-artifact는 v7.0.2, download-artifact는 v8.0.2로 갱신하였다.
+공식 action.yml에서 네 Actions의 Node.js 24 사용을 확인한 뒤 다시 실행하였다.
+위 링크는 업데이트 후 재검증한 성공 기록이다. 최종 Annotation은 경고 0개, 안내 6개였다.
+안내는 Ubuntu 실행 환경 전환 및 macOS 실행 대기 시간에 관한 것으로, 실패는 발생하지 않았다.
 이 실행에서 실패한 작업은 없었다. Artifact 목록과 만료되지 않은 상태도 확인하였다.
 보관 기간은 7일이므로 제출 시점에 따라 다운로드가 만료될 수 있다.
 이번 확인은 실행 상태와 단계 결과, Artifact 목록을 기준으로 하였으며,
@@ -92,7 +98,7 @@ GitHub 전송은 처음에 사용자 승인 필요로 중단되었고, 승인 �
 
 - [저장소](https://github.com/lmlalalala/OSS_SW_Programming)
 - [워크플로우 YAML](https://github.com/lmlalalala/OSS_SW_Programming/blob/feature/week7-ci-cd/.github/workflows/week7-ci-cd.yml)
-- [Actions 성공 실행 내역](https://github.com/lmlalalala/OSS_SW_Programming/actions/runs/43721651623)
+- [Actions 성공 실행 내역](https://github.com/lmlalalala/OSS_SW_Programming/actions/runs/43722632678)
 - [제출용 보고서](https://github.com/lmlalalala/OSS_SW_Programming/blob/feature/week7-ci-cd/WEEK7_CI_CD.md)
 
 보고서만 갱신한 후속 커밋에는 코드 변경이 없으며, 경로 필터에 따라 Actions를 다시 실행하지 않는다.
