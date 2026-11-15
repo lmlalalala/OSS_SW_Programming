@@ -1,0 +1,28 @@
+name: Week8 Cache Benchmark
+on:
+  push:
+    branches: [feature/week8-workflow-optimization]
+    paths:
+      - '.github/workflows/week8-cache-*.yml'
+      - '.github/actions/setup-week8-python/**'
+  workflow_dispatch:
+permissions:
+  contents: read
+jobs:
+  no-cache:
+    uses: ./.github/workflows/week8-cache-sample.yml
+    with:
+      cache-enabled: false
+      label: No cache
+  cold-cache:
+    needs: no-cache
+    uses: ./.github/workflows/week8-cache-sample.yml
+    with:
+      cache-enabled: true
+      label: Cold cache
+  warm-cache:
+    needs: cold-cache
+    uses: ./.github/workflows/week8-cache-sample.yml
+    with:
+      cache-enabled: true
+      label: Warm cache

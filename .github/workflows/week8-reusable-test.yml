@@ -1,0 +1,39 @@
+name: Week8 Reusable Matrix Tests
+
+on:
+  workflow_call:
+    inputs:
+      artifact-name:
+        description: Source ZIP artifact from the build job
+        required: true
+        type: string
+
+permissions:
+  contents: read
+
+jobs:
+  test:
+    runs-on: ${{ matrix.os }}
+    timeout-minutes: 10
+    strategy:
+      fail-fast: false
+      matrix:
+        os: [ubuntu-latest, windows-latest, macos-latest]
+        python: ['3.11', '3.12', '3.13']
+    steps:
+      - uses: actions/checkout@v7.0.1
+        with:
+          persist-credentials: false
+      - uses: ./.github/actions/setup-week8-python
+        with:
+          python-version: ${{ matrix.python }}
+      - uses: actions/download-artifact@v8.0.2
+        with:
+          name: ${{ inputs.artifact-name }}
+          path: dist
+      - name: Extract the built code
+        run: python -m zipfile -e dist/dora-source.zip package
+      - name: Test the built scripts (no network or real secrets)
+        env:
+          DORA_SOURCE_ROOT: package
+        run: python -m unittest discover -s week7/tests -v

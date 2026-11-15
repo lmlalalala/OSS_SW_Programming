@@ -1,0 +1,295 @@
+{
+  "run_id": 43725114162,
+  "commit": "df7251c1e7f3820830247d806f67cc584ea25774",
+  "jobs": [
+    {
+      "id": 132845250798,
+      "run_id": 43725114162,
+      "workflow_name": "Week8 Cache Benchmark",
+      "head_branch": "feature/week8-workflow-optimization",
+      "run_url": "https://api.github.com/repos/lmlalalala/OSS_SW_Programming/actions/runs/43725114162",
+      "run_attempt": 1,
+      "node_id": "CR_kwDOUR9VQM8AAAAe7jGo7g",
+      "head_sha": "df7251c1e7f3820830247d806f67cc584ea25774",
+      "url": "https://api.github.com/repos/lmlalalala/OSS_SW_Programming/actions/jobs/132845250798",
+      "html_url": "https://github.com/lmlalalala/OSS_SW_Programming/actions/runs/43725114162/job/132845250798",
+      "status": "completed",
+      "conclusion": "success",
+      "created_at": "2026-11-15T14:34:41Z",
+      "started_at": "2026-11-15T14:34:44Z",
+      "completed_at": "2026-11-15T14:35:07Z",
+      "name": "no-cache / No cache",
+      "steps": [
+        {
+          "name": "Set up job",
+          "status": "completed",
+          "conclusion": "success",
+          "number": 1,
+          "started_at": "2026-11-15T14:34:45Z",
+          "completed_at": "2026-11-15T14:34:45Z"
+        },
+        {
+          "name": "Run actions/checkout@v7.0.1",
+          "status": "completed",
+          "conclusion": "success",
+          "number": 2,
+          "started_at": "2026-11-15T14:34:45Z",
+          "completed_at": "2026-11-15T14:35:01Z"
+        },
+        {
+          "name": "Prepare Python and install lint tool",
+          "status": "completed",
+          "conclusion": "success",
+          "number": 3,
+          "started_at": "2026-11-15T14:35:01Z",
+          "completed_at": "2026-11-15T14:35:03Z"
+        },
+        {
+          "name": "Lint and test the same source",
+          "status": "completed",
+          "conclusion": "success",
+          "number": 4,
+          "started_at": "2026-11-15T14:35:03Z",
+          "completed_at": "2026-11-15T14:35:03Z"
+        },
+        {
+          "name": "Record cache state",
+          "status": "completed",
+          "conclusion": "success",
+          "number": 5,
+          "started_at": "2026-11-15T14:35:03Z",
+          "completed_at": "2026-11-15T14:35:03Z"
+        },
+        {
+          "name": "Post Prepare Python and install lint tool",
+          "status": "completed",
+          "conclusion": "success",
+          "number": 9,
+          "started_at": "2026-11-15T14:35:03Z",
+          "completed_at": "2026-11-15T14:35:04Z"
+        },
+        {
+          "name": "Post Run actions/checkout@v7.0.1",
+          "status": "completed",
+          "conclusion": "success",
+          "number": 10,
+          "started_at": "2026-11-15T14:35:04Z",
+          "completed_at": "2026-11-15T14:35:04Z"
+        },
+        {
+          "name": "Complete job",
+          "status": "completed",
+          "conclusion": "success",
+          "number": 11,
+          "started_at": "2026-11-15T14:35:04Z",
+          "completed_at": "2026-11-15T14:35:04Z"
+        }
+      ],
+      "check_run_url": "https://api.github.com/repos/lmlalalala/OSS_SW_Programming/check-runs/132845250798",
+      "labels": [
+        "ubuntu-latest"
+      ],
+      "runner_id": 1000000070,
+      "runner_name": "GitHub Actions 1000000070",
+      "runner_group_id": 0,
+      "runner_group_name": "GitHub Actions"
+    },
+    {
+      "id": 132845374485,
+      "run_id": 43725114162,
+      "workflow_name": "Week8 Cache Benchmark",
+      "head_branch": "feature/week8-workflow-optimization",
+      "run_url": "https://api.github.com/repos/lmlalalala/OSS_SW_Programming/actions/runs/43725114162",
+      "run_attempt": 1,
+      "node_id": "CR_kwDOUR9VQM8AAAAe7jOMFQ",
+      "head_sha": "df7251c1e7f3820830247d806f67cc584ea25774",
+      "url": "https://api.github.com/repos/lmlalalala/OSS_SW_Programming/actions/jobs/132845374485",
+      "html_url": "https://github.com/lmlalalala/OSS_SW_Programming/actions/runs/43725114162/job/132845374485",
+      "status": "completed",
+      "conclusion": "success",
+      "created_at": "2026-11-15T14:35:07Z",
+      "started_at": "2026-11-15T14:35:10Z",
+      "completed_at": "2026-11-15T14:35:33Z",
+      "name": "cold-cache / Cold cache",
+      "steps": [
+        {
+          "name": "Set up job",
+          "status": "completed",
+          "conclusion": "success",
+          "number": 1,
+          "started_at": "2026-11-15T14:35:11Z",
+          "completed_at": "2026-11-15T14:35:11Z"
+        },
+        {
+          "name": "Run actions/checkout@v7.0.1",
+          "status": "completed",
+          "conclusion": "success",
+          "number": 2,
+          "started_at": "2026-11-15T14:35:11Z",
+          "completed_at": "2026-11-15T14:35:25Z"
+        },
+        {
+          "name": "Prepare Python and install lint tool",
+          "status": "completed",
+          "conclusion": "success",
+          "number": 3,
+          "started_at": "2026-11-15T14:35:25Z",
+          "completed_at": "2026-11-15T14:35:29Z"
+        },
+        {
+          "name": "Lint and test the same source",
+          "status": "completed",
+          "conclusion": "success",
+          "number": 4,
+          "started_at": "2026-11-15T14:35:29Z",
+          "completed_at": "2026-11-15T14:35:29Z"
+        },
+        {
+          "name": "Record cache state",
+          "status": "completed",
+          "conclusion": "success",
+          "number": 5,
+          "started_at": "2026-11-15T14:35:29Z",
+          "completed_at": "2026-11-15T14:35:29Z"
+        },
+        {
+          "name": "Post Prepare Python and install lint tool",
+          "status": "completed",
+          "conclusion": "success",
+          "number": 9,
+          "started_at": "2026-11-15T14:35:29Z",
+          "completed_at": "2026-11-15T14:35:31Z"
+        },
+        {
+          "name": "Post Run actions/checkout@v7.0.1",
+          "status": "completed",
+          "conclusion": "success",
+          "number": 10,
+          "started_at": "2026-11-15T14:35:31Z",
+          "completed_at": "2026-11-15T14:35:31Z"
+        },
+        {
+          "name": "Complete job",
+          "status": "completed",
+          "conclusion": "success",
+          "number": 11,
+          "started_at": "2026-11-15T14:35:31Z",
+          "completed_at": "2026-11-15T14:35:31Z"
+        }
+      ],
+      "check_run_url": "https://api.github.com/repos/lmlalalala/OSS_SW_Programming/check-runs/132845374485",
+      "labels": [
+        "ubuntu-latest"
+      ],
+      "runner_id": 1000000080,
+      "runner_name": "GitHub Actions 1000000080",
+      "runner_group_id": 0,
+      "runner_group_name": "GitHub Actions"
+    },
+    {
+      "id": 132845499782,
+      "run_id": 43725114162,
+      "workflow_name": "Week8 Cache Benchmark",
+      "head_branch": "feature/week8-workflow-optimization",
+      "run_url": "https://api.github.com/repos/lmlalalala/OSS_SW_Programming/actions/runs/43725114162",
+      "run_attempt": 1,
+      "node_id": "CR_kwDOUR9VQM8AAAAe7jV1hg",
+      "head_sha": "df7251c1e7f3820830247d806f67cc584ea25774",
+      "url": "https://api.github.com/repos/lmlalalala/OSS_SW_Programming/actions/jobs/132845499782",
+      "html_url": "https://github.com/lmlalalala/OSS_SW_Programming/actions/runs/43725114162/job/132845499782",
+      "status": "completed",
+      "conclusion": "success",
+      "created_at": "2026-11-15T14:35:34Z",
+      "started_at": "2026-11-15T14:35:36Z",
+      "completed_at": "2026-11-15T14:35:55Z",
+      "name": "warm-cache / Warm cache",
+      "steps": [
+        {
+          "name": "Set up job",
+          "status": "completed",
+          "conclusion": "success",
+          "number": 1,
+          "started_at": "2026-11-15T14:35:36Z",
+          "completed_at": "2026-11-15T14:35:37Z"
+        },
+        {
+          "name": "Run actions/checkout@v7.0.1",
+          "status": "completed",
+          "conclusion": "success",
+          "number": 2,
+          "started_at": "2026-11-15T14:35:37Z",
+          "completed_at": "2026-11-15T14:35:49Z"
+        },
+        {
+          "name": "Prepare Python and install lint tool",
+          "status": "completed",
+          "conclusion": "success",
+          "number": 3,
+          "started_at": "2026-11-15T14:35:50Z",
+          "completed_at": "2026-11-15T14:35:52Z"
+        },
+        {
+          "name": "Lint and test the same source",
+          "status": "completed",
+          "conclusion": "success",
+          "number": 4,
+          "started_at": "2026-11-15T14:35:52Z",
+          "completed_at": "2026-11-15T14:35:52Z"
+        },
+        {
+          "name": "Record cache state",
+          "status": "completed",
+          "conclusion": "success",
+          "number": 5,
+          "started_at": "2026-11-15T14:35:52Z",
+          "completed_at": "2026-11-15T14:35:52Z"
+        },
+        {
+          "name": "Post Prepare Python and install lint tool",
+          "status": "completed",
+          "conclusion": "success",
+          "number": 9,
+          "started_at": "2026-11-15T14:35:52Z",
+          "completed_at": "2026-11-15T14:35:53Z"
+        },
+        {
+          "name": "Post Run actions/checkout@v7.0.1",
+          "status": "completed",
+          "conclusion": "success",
+          "number": 10,
+          "started_at": "2026-11-15T14:35:53Z",
+          "completed_at": "2026-11-15T14:35:53Z"
+        },
+        {
+          "name": "Complete job",
+          "status": "completed",
+          "conclusion": "success",
+          "number": 11,
+          "started_at": "2026-11-15T14:35:53Z",
+          "completed_at": "2026-11-15T14:35:53Z"
+        }
+      ],
+      "check_run_url": "https://api.github.com/repos/lmlalalala/OSS_SW_Programming/check-runs/132845499782",
+      "labels": [
+        "ubuntu-latest"
+      ],
+      "runner_id": 1000000081,
+      "runner_name": "GitHub Actions 1000000081",
+      "runner_group_id": 0,
+      "runner_group_name": "GitHub Actions"
+    }
+  ],
+  "cache_evidence": {
+    "cold": [
+      "2026-11-15T14:35:26.8934915Z Cache not found for input keys: week8-benchmark-43725114162-1-Linux-X64-py3.12-22f0b9815650b26bb5894a4ae1bc7fdccf11bb0ee7133459d36202c229eb97bd",
+      "2026-11-15T14:35:31.3163111Z Cache saved with key: week8-benchmark-43725114162-1-Linux-X64-py3.12-22f0b9815650b26bb5894a4ae1bc7fdccf11bb0ee7133459d36202c229eb97bd"
+    ],
+    "warm": [
+      "2026-11-15T14:35:51.2889212Z Cache hit for: week8-benchmark-43725114162-1-Linux-X64-py3.12-22f0b9815650b26bb5894a4ae1bc7fdccf11bb0ee7133459d36202c229eb97bd",
+      "2026-11-15T14:35:51.4790468Z Cache restored successfully",
+      "2026-11-15T14:35:52.2548544Z   Using cached ruff-0.14.3-py3-none-manylinux_2_17_x86_64.manylinux2014_x86_64.whl.metadata (25 kB)",
+      "2026-11-15T14:35:52.2583646Z Using cached ruff-0.14.3-py3-none-manylinux_2_17_x86_64.manylinux2014_x86_64.whl (13.3 MB)",
+      "2026-11-15T14:35:52.8050777Z   CACHE_HIT: true"
+    ]
+  }
+}
