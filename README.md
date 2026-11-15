@@ -12,6 +12,8 @@ OSS 기반 SW 프로그래밍 수업에서 수행한 주차별 과제를 정리�
 | 4주차 | GitHub Flow 및 코드 리뷰 | [WEEK4_GITHUB_FLOW_AND_CODE_REVIEW.md](WEEK4_GITHUB_FLOW_AND_CODE_REVIEW.md) |
 | 5주차 | 비동기 협업 체계 구축 | [WEEK5_ASYNC_COLLABORATION.md](WEEK5_ASYNC_COLLABORATION.md) |
 | 6주차 | OSS 기본 구조 및 Inner Source 계획 | [WEEK6_OPEN_SOURCE_AND_INNER_SOURCE.md](WEEK6_OPEN_SOURCE_AND_INNER_SOURCE.md) |
+| 7주차 | GitHub Actions 기반 CI/CD 실습 | [WEEK7_CI_CD.md](WEEK7_CI_CD.md) |
+| 8주차 | 워크플로우 실행 최적화 (재사용·캐싱·조건부 배포) | [WEEK8_WORKFLOW_OPTIMIZATION.md](WEEK8_WORKFLOW_OPTIMIZATION.md) |
 
 ## Repository
 
