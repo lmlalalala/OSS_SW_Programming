@@ -1,0 +1,114 @@
+name: Week7 Python CI and Demo Package
+
+on:
+  push:
+    branches: [feature/week7-ci-cd]
+    paths:
+      - '.github/workflows/week7-ci-cd.yml'
+      - 'scripts/**'
+      - 'dashboard/**'
+      - 'week7/**'
+  pull_request:
+    branches: [main]
+    paths:
+      - '.github/workflows/week7-ci-cd.yml'
+      - 'scripts/**'
+      - 'dashboard/**'
+      - 'week7/**'
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    steps:
+      - uses: actions/checkout@v7.0.1
+        with:
+          persist-credentials: false
+      - uses: actions/setup-python@v7.1.0
+        with:
+          python-version: '3.12'
+      - name: Install lint tool
+        run: python -m pip install -r week7/requirements-ci.txt
+      - name: Lint existing scripts and week7 code
+        run: python -m ruff check --config week7/ruff.toml scripts week7
+      - name: Build source archive
+        run: python week7/package_demo.py build --output dist/dora-source.zip
+      - uses: actions/upload-artifact@v7.0.2
+        with:
+          name: week7-source
+          path: dist/dora-source.zip
+          if-no-files-found: error
+          retention-days: 7
+
+  test:
+    needs: build
+    runs-on: ${{ matrix.os }}
+    timeout-minutes: 10
+    strategy:
+      fail-fast: false
+      matrix:
+        os: [ubuntu-latest, windows-latest, macos-latest]
+        python: ['3.11', '3.12']
+    steps:
+      - uses: actions/checkout@v7.0.1
+        with:
+          persist-credentials: false
+      - uses: actions/setup-python@v7.1.0
+        with:
+          python-version: ${{ matrix.python }}
+      - uses: actions/download-artifact@v8.0.2
+        with:
+          name: week7-source
+          path: dist
+      - name: Extract the built code
+        run: python -m zipfile -e dist/dora-source.zip package
+      - name: Test the built scripts (no network or real secrets)
+        env:
+          DORA_SOURCE_ROOT: package
+        run: python -m unittest discover -s week7/tests -v
+
+  deploy:
+    name: Deploy (demo ZIP only)
+    needs: test
+    # Fork PR에는 토큰을 주입하지 않는다. 일반 CI만 실행한다.
+    if: github.event_name != 'pull_request'
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    permissions:
+      contents: read
+      actions: read
+    steps:
+      - uses: actions/checkout@v7.0.1
+        with:
+          persist-credentials: false
+      - uses: actions/setup-python@v7.1.0
+        with:
+          python-version: '3.12'
+      - uses: actions/download-artifact@v8.0.2
+        with:
+          name: week7-source
+          path: dist
+      - name: Extract the tested code
+        run: python -m zipfile -e dist/dora-source.zip package
+      - name: Collect actual Actions data using a scoped secret
+        working-directory: package
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        run: python scripts/calculate_dora.py
+      - name: Generate report
+        working-directory: package
+        run: python scripts/generate_weekly_report.py
+      - name: Package demo outputs (no server deployment)
+        run: python week7/package_demo.py demo --root package --output dist/dora-demo.zip
+      - uses: actions/upload-artifact@v7.0.2
+        with:
+          name: week7-demo-package
+          path: dist/dora-demo.zip
+          if-no-files-found: error
+          retention-days: 7
+      - name: Describe delivery scope
+        run: echo "Demo ZIP artifact created. No server, Pages, or release was deployed." >> "$GITHUB_STEP_SUMMARY"
