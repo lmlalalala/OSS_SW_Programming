@@ -1,0 +1,56 @@
+
+name: Week5 Discussion Auto Reply
+
+on:
+  discussion:
+    types: [created]
+
+permissions:
+  discussions: write
+
+jobs:
+  auto-reply:
+    if: github.event.discussion.category.name == 'Q&A'
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Post automatic reply
+        uses: actions/github-script@v9
+        with:
+          script: |
+            const discussionId = context.payload.discussion.node_id;
+
+            const body = [
+              "안녕하세요! 질문을 등록해 주셔서 감사합니다.",
+              "",
+              "답변을 기다리는 동안 아래 문서를 확인해 주세요.",
+              "",
+              "- [Getting Started](https://github.com/lmlalalala/OSS_SW_Programming/wiki/Getting-Started)",
+              "- [Development Guide](https://github.com/lmlalalala/OSS_SW_Programming/wiki/Development-Guide)",
+              "- [Troubleshooting](https://github.com/lmlalalala/OSS_SW_Programming/wiki/Troubleshooting)",
+              "",
+              "오류 관련 질문이라면 실행 환경, 오류 메시지, 재현 방법을 함께 남겨주세요.",
+              "",
+              "※ 본 댓글은 GitHub Actions에서 자동으로 생성되었습니다."
+            ].join("\n");
+
+            const result = await github.graphql(
+              `mutation($discussionId: ID!, $body: String!) {
+                addDiscussionComment(
+                  input: {
+                    discussionId: $discussionId
+                    body: $body
+                  }
+                ) {
+                  comment {
+                    id
+                    url
+                  }
+                }
+              }`,
+              { discussionId, body }
+            );
+
+            core.info(
+              `Auto reply created: ${result.addDiscussionComment.comment.url}`
+            );
